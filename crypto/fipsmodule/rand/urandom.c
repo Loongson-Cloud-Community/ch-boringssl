@@ -160,7 +160,7 @@ static void init_once(void) {
   }
 #endif  // USE_NR_getrandom
 
-#if defined(OPENSSL_MACOS)
+#if defined(OPENSSL_MACOS) && __has_builtin(__builtin_available)
   // getentropy is available in macOS 10.12 and up. iOS 10 and up may also
   // support it, but the header is missing. See https://crbug.com/boringssl/287.
   if (__builtin_available(macos 10.12, *)) {
@@ -318,7 +318,7 @@ static int fill_with_entropy(uint8_t *out, size_t len, int block, int seed) {
       r = boringssl_getrandom(out, len, getrandom_flags);
 #elif defined(FREEBSD_GETRANDOM)
       r = getrandom(out, len, getrandom_flags);
-#elif defined(OPENSSL_MACOS)
+#elif defined(OPENSSL_MACOS) && __has_builtin(__builtin_available)
       if (__builtin_available(macos 10.12, *)) {
         // |getentropy| can only request 256 bytes at a time.
         size_t todo = len <= 256 ? len : 256;
