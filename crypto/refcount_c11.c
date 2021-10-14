@@ -31,8 +31,8 @@
 // static_assert(sizeof(CRYPTO_refcount_t) == sizeof(_Atomic CRYPTO_refcount_t),
 //               "_Atomic alters the size of a reference count");
 
-static_assert((CRYPTO_refcount_t)-1 == CRYPTO_REFCOUNT_MAX,
-              "CRYPTO_REFCOUNT_MAX is incorrect");
+// static_assert((CRYPTO_refcount_t)-1 == CRYPTO_REFCOUNT_MAX,
+//               "CRYPTO_REFCOUNT_MAX is incorrect");
 
 void CRYPTO_refcount_inc(CRYPTO_refcount_t *in_count) {
   _Atomic CRYPTO_refcount_t *count = (_Atomic CRYPTO_refcount_t *) in_count;
